@@ -19,7 +19,7 @@
 ### Python version
 Python Version 3
 ## File Descriptions
-- **Project1.py**- Python code used to do analysis
+- **Project1_1.py**- Python code used to do analysis
 - **README.md** - this readme file
 - **Titanic.csv** - the data set used of all passengers
 ## Project Motivation
