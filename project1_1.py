@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -11,19 +16,34 @@ df = pd.read_csv('./titanic.csv')
 df.head()
 
 
+
+
 #checking NaN values
+
+
+
+
 df.isna().sum()
 
 
+
+
 #filling NaN values for age and fare with median of that column
+
+
+
+
 df[['age', 'fare']] = df[['age', 'fare']].fillna(df[['age', 'fare']].median())
+
+
+
 
 #checking results
 
 
 
-df.isna().sum()
 
+df.isna().sum()
 
 
 
@@ -38,9 +58,7 @@ df=df.drop(columns=['body'])
 
 
 
-
 #creating dummy variables
-
 
 
 
@@ -50,9 +68,7 @@ df=pd.get_dummies(df, columns=['embarked', 'sex','pclass'])
 
 
 
-
 #turning boat column into a binary. if they were on a boat 1. if not 0
-
 
 
 
@@ -62,9 +78,7 @@ df[['boat']]=((df.notnull()).astype('int'))[['boat']]
 
 
 
-
 #checking results
-
 
 
 
@@ -74,15 +88,12 @@ df.head()
 
 
 
-
 df.dtypes
 
 
 
 
-
 #heatmap & chart too see any correlations
-
 
 
 
@@ -98,9 +109,14 @@ sns.heatmap(df.corr(), annot=True)
 
 
 
-
 df.corr()[['survived']].sort_values('survived', ascending=False)
 
+
+
+
+df_surv_coefs = df.corr()[['survived']].sort_values('survived', ascending=False)
+df_surv_coefs = df_surv_coefs.iloc[1: , :]
+df_surv_coefs.plot.bar()
 
 
 
@@ -115,16 +131,20 @@ df.corr()[['boat']].sort_values('boat', ascending=False)
 
 
 
+df_boat_coefs = df.corr()[['boat']].sort_values('boat', ascending=False)
+df_boat_coefs = df_boat_coefs.iloc[1: , :]
+df_boat_coefs.plot.bar()
+
+
+
 
 #what do some of these questions mean for a child?
 
 
 
 
-
 df_children=df.loc[df['age'] < 18]
 df_children
-
 
 
 
@@ -146,8 +166,13 @@ df_adults
 
 
 
-#Survivor rate of children & Adults
+plt.subplots(figsize=(20,15))
+sns.heatmap(df_adults.corr(), annot=True)
 
+
+
+
+#Survivor rate of children & Adults
 
 
 
@@ -158,6 +183,14 @@ len(df_children.loc[df_children['survived'] == 1])/len(df_children)
 
 
 len(df_adults.loc[df_adults['survived'] == 1])/len(df_adults)
+
+
+
+
+child_survival=len(df_children.loc[df_children['survived'] == 1])/len(df_children)
+adult_survival=len(df_adults.loc[df_adults['survived'] == 1])/len(df_adults)
+print(f'Child Survival: {child_survival:.2f}')
+print(f'Adult Survival: {adult_survival:.2f}')
 
 
 
@@ -177,11 +210,22 @@ df_female_noboat_survived=df_female_noboat.loc[df_female_noboat['survived']==1]
 
 
 
-
 len(df_female_noboat_survived)/len(df_female)
 
 
+
+
 len(df_male_noboat_survived)/len(df_male)
+
+
+
+
+female_survival=len(df_female_noboat_survived)/len(df_female)
+male_survival=len(df_male_noboat_survived)/len(df_male)
+print(f'Female Survival-no boat: {female_survival:.3f}')
+print(f'Male Survival-no boat: {male_survival:.3f}')
+
+
 
 
 #survival rate is significantly lower for men when compared to women who did not make it to a boat.
@@ -190,7 +234,6 @@ len(df_male_noboat_survived)/len(df_male)
 
 
 #preparing for regression
-
 
 
 
@@ -205,9 +248,7 @@ df_clean = df.drop(['cabin', 'home.dest', 'ticket','name'], axis=1)
 
 
 
-
 list(df_clean.columns)
-
 
 
 
@@ -228,9 +269,7 @@ lm_model.fit(X_train, y_train)
 
 
 
-
 X_train.shape
-
 
 
 
@@ -252,21 +291,20 @@ print(df_preds)
 
 
 
-
 from sklearn.metrics import mean_absolute_error
 mae = mean_absolute_error(y_test, y_pred)
 mse = mean_squared_error(y_test, y_pred)
 rmse = np.sqrt(mse)
+r2=r2_score(y_test, y_pred)
 print(f'Mean absolute error: {mae:.2f}')
 print(f'Mean squared error: {mse:.2f}')
 print(f'Root mean squared error: {rmse:.2f}')
-
+print(f'R-squared: {r2:.2f}')
 
 
 
 
 r2_score(y_test, y_pred)
-
 
 
 
@@ -279,9 +317,7 @@ r2_score(y_test, y_pred)
 
 
 
-
 #now just seeing how the model responds with a single indpendent vairable, boat
-
 
 
 
@@ -306,21 +342,20 @@ print(df_preds)
 
 
 
-
 from sklearn.metrics import mean_absolute_error
 mae = mean_absolute_error(y_test, y_pred)
 mse = mean_squared_error(y_test, y_pred)
 rmse = np.sqrt(mse)
+r2=r2_score(y_test, y_pred)
 print(f'Mean absolute error: {mae:.2f}')
 print(f'Mean squared error: {mse:.2f}')
 print(f'Root mean squared error: {rmse:.2f}')
-
+print(f'R-squared: {r2:.2f}')
 
 
 
 
 r2_score(y_test, y_pred)
-
 
 
 
@@ -362,20 +397,20 @@ print(df_preds)
 
 
 
-
 from sklearn.metrics import mean_absolute_error
 mae = mean_absolute_error(y_test, y_pred)
 mse = mean_squared_error(y_test, y_pred)
 rmse = np.sqrt(mse)
+r2=r2_score(y_test, y_pred)
 print(f'Mean absolute error: {mae:.2f}')
 print(f'Mean squared error: {mse:.2f}')
 print(f'Root mean squared error: {rmse:.2f}')
+print(f'R-squared: {r2:.2f}')
 
 
 
 
 r2_score(y_test, y_pred)
-
 
 
 
@@ -388,3 +423,43 @@ r2_score(y_test, y_pred)
 
 print(lg_model.coef_)
 
+
+
+
+#checking to see what happens if we just remove the boat variable. how does the prediction model fare?
+
+
+
+
+X = df_clean[['age', 'sibsp', 'parch', 'fare', 'embarked_C', 'embarked_Q', 'embarked_S', 'sex_female', 'sex_male', 'pclass_1', 'pclass_2', 'pclass_3']]
+y = df_clean[['survived']]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.3, random_state=42)
+
+#instantiate
+#fit training
+#predict test data
+#score your model on test
+
+lm_model = LinearRegression(normalize=True)
+lm_model.fit(X_train, y_train)
+
+
+
+
+y_pred = lm_model.predict(X_test)
+df_preds = pd.DataFrame({'Actual': y_test.squeeze(), 'Predicted': y_pred.squeeze()})
+print(df_preds)
+
+
+
+
+from sklearn.metrics import mean_absolute_error
+mae = mean_absolute_error(y_test, y_pred)
+mse = mean_squared_error(y_test, y_pred)
+rmse = np.sqrt(mse)
+r2=r2_score(y_test, y_pred)
+print(f'Mean absolute error: {mae:.2f}')
+print(f'Mean squared error: {mse:.2f}')
+print(f'Root mean squared error: {rmse:.2f}')
+print(f'R-squared: {r2:.2f}')
