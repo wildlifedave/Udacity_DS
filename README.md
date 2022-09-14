@@ -31,6 +31,11 @@ Overall, the titanic incident is fascinating to many people for many reasons. Af
 4. What was the survival rate for those that did not make it to a boat?
 ## How to interact with the project
 ### Results
+1. “Women and Children!” may not have been accurate. The priorities seemed to be strongly on JUST women. There is also a less extreme priority to higher class folks as well.
+2. Of those who did not make it to a boat and STILL survived — there was a much higher chance of survival if they were a woman. This confirms some scientific evidence but research is ongoing.
+3. Children did have a higher survival rate — but likely because there were far fewer of them overall.
+4. Just making it to a boat was the highest correlation and predictor of survival in the regression models.
+5. The difference between the 3 regression models shows very little difference from each other — with very high prediction accuracy overall. 88–89% R² value, 3–5% average error, and at most the models were 16–17% off of the true values.
 ### Methods Tried
 - Linear regression for suvival against all independent numeric variables
 - Linear regression for suvival against just whether they were in a boat or not
