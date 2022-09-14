@@ -1,6 +1,11 @@
-[![Titanic](https://www.kindpng.com/imgv/TTowoJo_transparent-titanic-png-transparent-titanic-clip-art-png/ "Titanic")](# "Titanic")
+[![Titanic](/titaniclogo.png "Titanic")](# "Titanic")
 # Project 1: Titanic Crash Passenger Data
 ## Table of contents
+- Installation
+- File Descriptions
+- Project Motivation
+- How to interact with Project
+- Licensing, Authors, Acknowledgements
 ## Installation
 ### Libraries
 - `mport numpy as np`
