@@ -44,5 +44,3 @@ Overall, the titanic incident is fascinating to many people for many reasons. Af
 - **Source of Data** - [Kaggle](https://www.kaggle.com/c/titanic "Kaggle")
 - **Author** - David Krol (Me)
 - **Aknowledgments** - StackOverflow, Pandas Docs, Scikit Learn Docs, Numpy Docs
-
-
