@@ -12,9 +12,9 @@ from sklearn.metrics import r2_score, mean_squared_error
 import seaborn as sns
 get_ipython().run_line_magic('matplotlib', 'inline')
 
-#Gather
+# Gather
 df = pd.read_csv('./titanic.csv')
-#assessing data
+# assessing data
 df.head()
 
 """
